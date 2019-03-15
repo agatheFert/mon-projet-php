@@ -11,12 +11,15 @@ use Generic\Router\RouterMiddleware;
 use Appli\Controller\ContactController;
 use Generic\Middlewares\TrailingSlashMiddleware;
 
-
 $rootDir = dirname(__DIR__);
 
 // chargement de l'autoloader
 require_once dirname(__DIR__, 1) ."/vendor/autoload.php";
 
+// Creation du conteneur
+$builder = new DI\ContainerBuilder();
+$builder->addDefinitions($rootDir.'/config/config.php');
+$container = $builder->build();
 
 // Creation de la requete
 // ::fromGlobals();   :: signifie statique
@@ -26,17 +29,17 @@ $request = ServerRequest::fromGlobals();
 $twig = new TwigRenderer($rootDir.'/templates');
 
 // Ajout des routes dans le routeur
-$router = new Router();
-$router->addRoute('/', new HomeController($twig), 'homepage');
-$router->addRoute('/contact', new ContactController($twig), 'contact');
+$router = $container->get(Router::class);
+$router->addRoute('/', $container->get(HomeController::class), 'homepage');
+$router->addRoute('/contact', $container->get(ContactController::class), 'contact');
 
 
 
 
 // Creation de la reponse : on instancie notre class APP
 $app = new App([
-            new TrailingSlashMiddleware(),
-            new RouterMiddleware($router)
+    $container->get(TrailingSlashMiddleware::class),
+    $container->get(RouterMiddleware::class)
 ]);
 
 //$response = new Response(200, [], "<h1>Bonjour  !</h1>");
@@ -47,4 +50,3 @@ $response = $app->handle($request);
 
 //Renvoi de la reponse au navigateur
 \Http\Response\send($response);
-

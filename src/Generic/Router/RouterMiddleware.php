@@ -8,8 +8,6 @@ use Psr\Http\Server\MiddlewareInterface;
 use Psr\Http\Message\ServerRequestInterface;
 use Psr\Http\Server\RequestHandlerInterface;
 
-
-
 class RouterMiddleware implements MiddlewareInterface
 {
     
@@ -18,7 +16,7 @@ class RouterMiddleware implements MiddlewareInterface
     public function __construct(Router $router)
     {
         $this->router = $router;
-    } 
+    }
 
     /**
      * process
@@ -28,7 +26,8 @@ class RouterMiddleware implements MiddlewareInterface
      *
      * @return ResponseInterface
      */
-    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface {
+    public function process(ServerRequestInterface $request, RequestHandlerInterface $handler): ResponseInterface
+    {
         
            // Recuperation du routeur
            $router = new Router;
@@ -37,19 +36,13 @@ class RouterMiddleware implements MiddlewareInterface
            $controller = $this->router->match($request);
            //var_dump($controller);
 
-           if(!is_null($controller)){
-               // si il y a un controller -> on appelle sa methode "process"
-               $response = $controller->process($request, $handler);
-
-           } else {
-                // si il n'y a pas de controller -> on renvoit une page 404
-               $response = new Response(404, [], "<h1>PAge 404</h1>" );
-
-           }
+        if (!is_null($controller)) {
+            // si il y a un controller -> on appelle sa methode "process"
+            $response = $controller->process($request, $handler);
+        } else {
+             // si il n'y a pas de controller -> on renvoit une page 404
+            $response = new Response(404, [], "<h1>PAge 404</h1>");
+        }
            return $response;
-
-
     }
-
 }
-

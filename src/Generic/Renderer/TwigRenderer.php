@@ -2,14 +2,13 @@
 
 namespace Generic\Renderer;
 
-
 use Twig\Environment;
 use Twig\Loader\FilesystemLoader;
 
-
-
 class TwigRenderer
-{    
+{
+
+    
 
     private $twig;
 
@@ -20,8 +19,6 @@ class TwigRenderer
         $this->twig = new \Twig\Environment($loader, [
             'cache' => false
         ]);
-
-
     }
 
 
@@ -29,6 +26,5 @@ class TwigRenderer
     {
 
         return $this->twig->render($view, $variables);
-
     }
-}           
+}

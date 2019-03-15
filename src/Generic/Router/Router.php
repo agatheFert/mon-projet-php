@@ -15,17 +15,16 @@ class Router
 
     public function __construct()
     {
-        // pour que les 2 functions addclass et match utilisent la meme propriete il faut la declarer en dehors des 2 fonctions
+        // pour que les 2 functions addclass et match utilisent la meme propriete
+        //il faut la declarer en dehors des 2 fonctions
          $this->routerVendor = new FastRouteRouter();
-
     }
 
     
-    //Puisqu'on a instancié la class FastRouteRouter(); on se sert de ses 2 fonctions : addclass et match
+
+    //Puisqu'on a instancié la class FastRouteRouter(); on se sert de ses 2 fonctions : addRoute et match
     //chemin FastRouteRouter() : vendor\zendframework\zend-expressive-fastroute\src\FastRouteRouter.php
-
-
-    public function addRoute(string $url, MiddlewareInterface $controller, ?string $name = null ): void
+    public function addRoute(string $url, MiddlewareInterface $controller, ?string $name = null): void
     {
         
         // On crée un objet route pour le passer au "vrai" routeur
@@ -42,18 +41,12 @@ class Router
        
         $result = $this->routerVendor->match($request);
 
-        if($result->isSuccess()) {
-            
+        if ($result->isSuccess()) {
             $route = $result->getMatchedRoute()->getMiddleware();
-
         } else {
             $route = null;
         }
 
         return $route;
     }
-
-
-
-    
 }

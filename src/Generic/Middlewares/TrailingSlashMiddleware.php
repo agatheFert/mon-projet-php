@@ -23,10 +23,13 @@ class TrailingSlashMiddleware implements MiddlewareInterface
 
 
        // Si le dernier caratere est un slash /
-        if ($lastCharacter === '/') {
+       // if ($lastCharacter === '/') {
+        //strlen — Calcule la taille d'une chaîne
+        //  $url  correspond a l'url sans le nom de domaine
+        if ($lastCharacter === '/' && $url !== '/') {
             // Determier la new url : substr($url, 0, -1) demarre de 0 et va jusqu'a la fin -1
             $newURL = substr($url, 0, -1);
-            var_dump("nouvelle url : " . $newURL);
+           // var_dump("nouvelle url : " . $newURL);
 
 
             // Rediriger
@@ -42,7 +45,7 @@ class TrailingSlashMiddleware implements MiddlewareInterface
 
 
 
-        var_dump("Ancienne : " . $url);
-        die("On est dans TrailingSlashMiddleware");
+        //var_dump("Ancienne : " . $url);
+       // die("On est dans TrailingSlashMiddleware");
     }
 }

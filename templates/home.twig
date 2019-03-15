@@ -1,0 +1,30 @@
+   
+   {%  extends 'base.twig' %}   
+
+   {%  block body  %} 
+   
+   <h1> {{ title}}</h1>  
+   <p> {{ products[0]["description"]}}</p>  
+
+
+   <h2>Condition if en Twig</h2>
+   {% if title == "Bonjour !" %}
+  <p>Bonjour !</p>
+   {% elseif title == "Bonsoir !" %}
+   <p>Bonsoir !</p>>
+    {% else %}
+    <p>Bonne nuit !</p>
+    {% endif %}
+
+
+    <h2>Boucle for en Twig</h2>
+    {% for produitEnCours in products %}
+        <p>{{ produitEnCours.name }}</p>
+    {% endfor %}
+
+
+    <!--  Commentaire HTML   -->
+    {#   Commentaire TWIG  #}
+
+
+    {%  endblock body %}
